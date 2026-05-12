@@ -5,7 +5,6 @@ import 'package:chat_appb/pages/chat_page.dart';
 import 'package:chat_appb/pages/register_page.dart';
 import 'package:chat_appb/widgets/custom_button.dart';
 import 'package:chat_appb/widgets/customtext_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -123,10 +122,5 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<void> loginUser() async {
-    UserCredential user = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email!, password: password!);
   }
 }
