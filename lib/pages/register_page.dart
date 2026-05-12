@@ -7,16 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class RegisterPage extends StatefulWidget {
-  RegisterPage({super.key});
-  static String id = 'registerpage';
-
-  @override
-  State<RegisterPage> createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends State<RegisterPage> {
+class RegisterPage extends StatelessWidget {
   GlobalKey<FormState> formKey = GlobalKey();
+  static String id = 'registerpage';
   String? email;
   String? password;
   bool isLoading = false;
@@ -80,7 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   onTap: () async {
                     if (formKey.currentState!.validate()) {
                       isLoading = true;
-                      setState(() {});
+
                       try {
                         await registerUser();
                         Navigator.pushNamed(
@@ -98,7 +91,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         showSnackBar(context, 'there was an error');
                       }
                       isLoading = false;
-                      setState(() {});
                     } else {}
                   },
                   text: 'REGISTER',
@@ -129,10 +121,5 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
-  }
-
-  Future<void> registerUser() async {
-    UserCredential user = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email!, password: password!);
   }
 }
