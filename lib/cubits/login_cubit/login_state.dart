@@ -9,4 +9,7 @@ class LoginLoding extends LoginState {}
 
 class LoginSuccess extends LoginState {}
 
-class LoginFailure extends LoginState {}
+class LoginFailure extends LoginState {
+  String errMessage;
+  LoginFailure({required this.errMessage});
+}

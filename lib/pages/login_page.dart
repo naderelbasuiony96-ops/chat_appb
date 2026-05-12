@@ -19,17 +19,17 @@ class LoginPage extends StatelessWidget {
   String? password;
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit, LoginState>(
+    return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginLoding) {
           isLoading = true;
         } else if (state is LoginSuccess) {
           Navigator.pushNamed(context, ChatPage.id);
         } else if (state is LoginFailure) {
-          showSnackBar(context, 'somthing went wrong');
+          showSnackBar(context, state.errMessage);
         }
       },
-      child: ModalProgressHUD(
+      builder: (context, state) => ModalProgressHUD(
         inAsyncCall: isLoading,
         child: Scaffold(
           backgroundColor: KPrimaryColor,
@@ -86,25 +86,9 @@ class LoginPage extends StatelessWidget {
                   CustomButton(
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
-                        isLoading = true;
-
-                        try {
-                          await loginUser();
-                          Navigator.pushNamed(
-                            context,
-                            ChatPage.id,
-                            arguments: email,
-                          );
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'user-not-found') {
-                            showSnackBar(context, 'user-not-found');
-                          } else if (e.code == 'wrong-password') {
-                            showSnackBar(context, 'wrong-password');
-                          }
-                        } catch (e) {
-                          showSnackBar(context, 'there was an error');
-                        }
-                        isLoading = false;
+                        BlocProvider.of<LoginCubit>(
+                          context,
+                        ).loginUser(email: email!, password: password!);
                       } else {}
                     },
 
