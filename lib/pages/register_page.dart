@@ -15,6 +15,8 @@ class RegisterPage extends StatelessWidget {
   String? password;
   bool isLoading = false;
 
+  RegisterPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RegisterCubit, RegisterState>(
